@@ -1,0 +1,36 @@
+ s--> v, np, pp, pp.
+ s--> v, np, pp.
+ s--> v, np.
+ 
+ np--> det, adj, n, pp.
+ np--> det, n, pp.
+ np--> det, n.
+ np--> det, adj, n.
+ np--> det, n.
+ 
+ pp--> prep, np.
+ 
+ det-->[the].
+ 
+ n-->[cone].
+ n-->[square].
+ n-->[block].
+ n-->[circle].
+ n-->[cube].
+ 
+ prep-->[on].
+ 
+ adj-->[red].
+ adj-->[blue].
+ adj-->[green].
+
+ v-->[put].
+ v-->[take].
+
+replace(_, _, [], []).
+replace(X, Y, [X|W], [Y|Z]) :- replace(X, Y, W, Z).
+replace(X, Y, [H|W], [H|Z]) :- H \= X, replace(X, Y, W, Z).
+ 
+command(X) :- X==[],!,write('I do not understand you, please try again.').
+command(X) :- s(X,[]), replace('put', 'I have put', X, Y), replace('take', 'I have taken', Y, Z), write(Z).
+command(X) :- not(s(X,[])), write('I do not understand you, please try again.').

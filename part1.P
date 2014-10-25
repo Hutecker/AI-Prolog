@@ -1,0 +1,84 @@
+male(george).
+female(mum).
+female(margaret).
+male(phillip).
+female(elizabeth).
+male(spencer).
+female(kydd).
+female(diana).
+male(charles).
+female(anne).
+male(mark).
+male(andrew).
+female(sarah).
+male(edward).
+male(william).
+male(harry).
+male(peter).
+female(zara).
+female(beatrice).
+male(eugenie). 
+
+parent(george, elizabeth).
+parent(mum, elizabeth).
+parent(george, margaret).
+parent(mum, margaret).
+parent(spencer, diana).
+parent(kydd, diana).
+parent(phillip, edward).
+parent(elizabeth, edward).
+parent(elizabeth, charles).
+parent(phillip, charles).
+parent(elizabeth, anne).
+parent(phillip, anne).
+parent(elizabeth, andrew).
+parent(phillip, andrew).
+parent(diana, harry).
+parent(charles, harry).
+parent(diana, william).
+parent(charles, william).
+parent(mark, zara).
+parent(anne, zara).
+parent(anne, peter).
+parent(mark, peter).
+parent(sarah, eugenie).
+parent(andrew, eugenie).
+parent(andrew, beatrice).
+parent(sarah, beatrice).
+
+married(george, mum).
+married(spencer, kydd).
+married(elizabeth, phillip).
+married(diana, charles).
+married(anne, mark).
+married(andrew, sarah).
+
+husband(george, mum).
+husband(spencer, kydd).
+husband(phillip, elizabeth).
+husband(charles, diana).
+husband(mark, anne).
+husband(andrew, sarah).
+
+wife(mum, george).
+wife(kydd, spencer).
+wife(elizabeth, phillip).
+wife(diana, charles).
+wife(anne, mark).
+wife(sarah, andrew).
+
+son(X,Y) :- male(X),parent(Y,X).
+daughter(X,Y) :- female(X),parent(Y,X).
+aunt(X,Y) :- female(X),sister(X,Z),mother(Z,Y).
+aunt(X,Y) :- female(X),sister(X,Z),father(Z,Y).
+sister(X,Y) :- female(X),parent(Z,X),parent(Z,Y), X \= Y.
+uncle(X,Y) :- brother(X,Z),parent(Z,Y).
+brother(X,Y) :-  male(X),parent(Z,X),parent(Z,Y), X \= Y.
+grandparent(X, Y) :- parent(X, Z), parent(Z, Y).
+greatgrandparent(X, Y) :- grandparent(X, Z), parent(Z, Y).
+grandchild(X, Y) :- parent(Y, Z), parent(Z, X).
+brotherinlaw(X, Y) :- brother(X, Z), married(Z, Y).
+brotherinlaw(X, Y) :- husband(X, Z), sister(Z, Y).
+sisterinlaw(X, Y) :- sister(X, Z), married(Z, Y).
+sisterinlaw(X, Y) :- wife(X, Z), brother(Z, Y).
+firstcousin(X, Y) :- grandparent(Z, X), grandparent(W, Y), Z == W.
